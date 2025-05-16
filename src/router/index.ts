@@ -18,6 +18,20 @@ const router = createRouter({
       component: () => import('../views/AboutView.vue'),
     },
   ],
+  scrollBehavior() {
+    // 始终滚动到顶部
+    return { top: 0 }
+  },
 })
+
+export const resetRouter = () => {
+  const resetWhiteNameList = []
+  router.getRoutes().forEach((route) => {
+    const { name } = route
+    if (name && !resetWhiteNameList.includes(name)) {
+      router.hasRoute(name) && router.removeRoute(name)
+    }
+  })
+}
 
 export default router
